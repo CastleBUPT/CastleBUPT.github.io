@@ -6,10 +6,12 @@
       <title><![CDATA[Hexo发布指南]]></title>
       <url>/2017/05/23/FirstTest/</url>
       <content type="html"><![CDATA[<p>相当于每次换主题时候的备忘录，免得老是翻别人的博客。</p>
+<h2 id="更新搜索器algolia-index"><a href="#更新搜索器algolia-index" class="headerlink" title="更新搜索器algolia index"></a>更新搜索器algolia index</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo algolia</div></pre></td></tr></table></figure>
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo s</div></pre></td></tr></table></figure>
 <p>测试服务启动，之后可以在浏览器中输入<a href="http://localhost:4000/" target="_blank" rel="external">https://localhost:4000</a> 访问。</p>
 <h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>测试没问题后，生成静态网页文件发布至Github pages 中。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure>]]></content>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure>
+]]></content>
       
         
     </entry>
