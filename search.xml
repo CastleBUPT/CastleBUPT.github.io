@@ -3,35 +3,8 @@
   
     
     <entry>
-      <title><![CDATA[Hexo发布指南]]></title>
-      <url>/2017/05/23/FirstTest/</url>
-      <content type="html"><![CDATA[<p>相当于每次换主题时候的备忘录，免得老是翻别人的博客。</p>
-<a id="more"></a>
-<h2 id="更新搜索器algolia-index"><a href="#更新搜索器algolia-index" class="headerlink" title="更新搜索器algolia index"></a>更新搜索器algolia index</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo algolia</div></pre></td></tr></table></figure>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo s</div></pre></td></tr></table></figure>
-<p>测试服务启动，之后可以在浏览器中输入<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000</a> 访问。</p>
-<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>测试没问题后，生成静态网页文件发布至Github pages 中。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure>
-]]></content>
-      
-        <categories>
-            
-            <category> 备忘 </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Hexo </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[Hexo标签插件]]></title>
-      <url>/2017/05/23/%E5%86%85%E7%BD%AE%E6%A0%87%E7%AD%BE/</url>
+      <url>/2017/05/24/%E5%86%85%E7%BD%AE%E6%A0%87%E7%AD%BE/</url>
       <content type="html"><![CDATA[<p>标签插件是用于在文章中快速插入特定内容的插件。</p>
 <a id="more"></a>
 <h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[链接文字](链接地址)</div><div class="line">例子： [Markdown](http://zh.wikipedia.com/wiki/Markdown)</div></pre></td></tr></table></figure>
@@ -53,6 +26,33 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- 标签方式，要求版本在0.4.5或以上 --&gt;</span></div><div class="line">&#123;% fullimage /image-url, alt, title %&#125;</div><div class="line"></div><div class="line"><span class="comment">&lt;!-- 标签别名 --&gt;</span></div><div class="line">&#123;% fi /image-url, alt, title %&#125;</div></pre></td></tr></table></figure>
 <h2 id="Bootstrap-Callout"><a href="#Bootstrap-Callout" class="headerlink" title="Bootstrap Callout"></a>Bootstrap Callout</h2><p>具体用法看<a href="https://almostover.ru/2016-01/hexo-theme-next-test/" target="_blank" rel="external">Hexo Theme Next Highlight diff style</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;% note class_name %&#125; Content (md partial supported) &#123;% endnote %&#125;</div></pre></td></tr></table></figure>]]></content>
+      
+        <categories>
+            
+            <category> 备忘 </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Hexo </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hexo发布指南]]></title>
+      <url>/2017/05/23/FirstTest/</url>
+      <content type="html"><![CDATA[<p>相当于每次换主题时候的备忘录，免得老是翻别人的博客。</p>
+<a id="more"></a>
+<h2 id="更新搜索器algolia-index"><a href="#更新搜索器algolia-index" class="headerlink" title="更新搜索器algolia index"></a>更新搜索器algolia index</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo algolia</div></pre></td></tr></table></figure>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo s</div></pre></td></tr></table></figure>
+<p>测试服务启动，之后可以在浏览器中输入<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000</a> 访问。</p>
+<h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>测试没问题后，生成静态网页文件发布至Github pages 中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure>
+]]></content>
       
         <categories>
             
