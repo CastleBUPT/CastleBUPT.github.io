@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-25T09:57:36.000Z</updated>
+  <updated>2017-06-03T05:41:39.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AFNetworking中的设计模式之工厂模式</title>
+    <link href="http://yoursite.com/2017/05/31/AFNetWorking%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://yoursite.com/2017/05/31/AFNetWorking工厂模式/</id>
+    <published>2017-05-31T06:59:28.000Z</published>
+    <updated>2017-06-03T05:41:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://zh.wikipedia.org/wiki/工厂方法" target="_blank" rel="external">工厂方法模式</a>(Factory Method Pattern)又称为工厂模式，属于创建型模式。在工厂方法模式中，工厂父类负责定义创建产品对象的公共接口，而工厂子类负责生成具体的产品对象，这样的目的是将产品类的实例化操作延迟到工厂子类中完成，即通过工厂子类来确定究竟应该实例化哪一个具体产品类。</p>
+<a id="more"></a>
+<h2 id="模式结构"><a href="#模式结构" class="headerlink" title="模式结构"></a>模式结构</h2><p>Objective-C中没有类似于CPP和Java的abstract class，不过可以用protocol来实现类似的效果。在<a href="https://github.com/AFNetworking/AFNetworking#serialization" target="_blank" rel="external">AFNetworking</a>中，HTTP协议的请求模块AFHTTPRequestSerializer、AFJSONRequestSerializer、AFPropertyListRequestSerializer都遵循了<a href="https://github.com/AFNetworking/AFNetworking/blob/master/AFNetworking/AFURLRequestSerialization.h" target="_blank" rel="external">AFURLRequestSerialization</a>(以下都以AFHTTPRequestSerializer为例)：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@interface AFHTTPRequestSerializer : NSObject &lt;AFURLRequestSerialization&gt;</div></pre></td></tr></table></figure>
+<p>AFURLRequestSerialization的定义是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@protocol AFURLRequestSerialization &lt;NSObject, NSSecureCoding, NSCopying&gt;</div><div class="line">- (nullable NSURLRequest *)requestBySerializingRequest:(NSURLRequest *)request</div><div class="line">                               withParameters:(nullable id)parameters</div><div class="line">                                        error:(NSError * _Nullable __autoreleasing *)error NS_SWIFT_NOTHROW;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>在AFNetworking的实现中，抽象产品和抽象工厂都是AFURLRequestSerialization，具体产品和具体工厂都是AFHTTPRequestSerializer。模式结构图如下所示：</p>
+<p><img src="http://7xwok9.com1.z0.glb.clouddn.com/AF_FactoryPattern.png" alt="模式结构"></p>
+<h2 id="模式分析"><a href="#模式分析" class="headerlink" title="模式分析"></a>模式分析</h2><p>工厂模式中，工厂方法用来创建用户所需的产品，同时隐藏了具体产品的创建和初始化的细节。</p>
+<p>AFNetworking中，AFHTTPRequestSerializer工厂类用+ (instancetype)serializer作为工厂方法，返回AFHTTPRequestSerializer产品实例，隐藏了自身的初始化细节。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/工厂方法&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;工厂方法模式&lt;/a&gt;(Factory Method Pattern)又称为工厂模式，属于创建型模式。在工厂方法模式中，工厂父类负责定义创建产品对象的公共接口，而工厂子类负责生成具体的产品对象，这样的目的是将产品类的实例化操作延迟到工厂子类中完成，即通过工厂子类来确定究竟应该实例化哪一个具体产品类。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS开发" scheme="http://yoursite.com/categories/iOS%E5%BC%80%E5%8F%91/"/>
+    
+    
+      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="AFNetworking" scheme="http://yoursite.com/tags/AFNetworking/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo标签插件</title>
@@ -59,11 +93,11 @@
     <link href="http://yoursite.com/2017/05/23/FirstTest/"/>
     <id>http://yoursite.com/2017/05/23/FirstTest/</id>
     <published>2017-05-23T07:06:27.000Z</published>
-    <updated>2017-05-24T05:14:07.000Z</updated>
+    <updated>2017-06-03T05:49:25.000Z</updated>
     
     <content type="html"><![CDATA[<p>相当于每次换主题时候的备忘录，免得老是翻别人的博客。</p>
 <a id="more"></a>
-<h2 id="更新搜索器algolia-index"><a href="#更新搜索器algolia-index" class="headerlink" title="更新搜索器algolia index"></a>更新搜索器algolia index</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo algolia</div></pre></td></tr></table></figure>
+<h2 id="更新搜索器algolia-index"><a href="#更新搜索器algolia-index" class="headerlink" title="更新搜索器algolia index"></a>更新搜索器algolia index</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo algolia --config _config.yml,_config.private.yml</div></pre></td></tr></table></figure>
 <h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo s</div></pre></td></tr></table></figure>
 <p>测试服务启动，之后可以在浏览器中输入<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000</a> 访问。</p>
 <h2 id="发布"><a href="#发布" class="headerlink" title="发布"></a>发布</h2><p>测试没问题后，生成静态网页文件发布至Github pages 中。</p>
