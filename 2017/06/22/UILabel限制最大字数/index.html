@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="iOS开发," />
 
 
 
@@ -92,12 +92,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Castle&#39;s Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="最近项目里要求一些label要限制字数，超出以后打点。由于cell里面的布局可能很复杂，其他的控件可能需要依赖label的布局，所以不能直接把label设置成一个固定长度。 看了一圈发现网上没有太好的解决办法，不过StackOverflow的一个帖子给了一些启发，就记录一下。">
+<meta name="keywords" content="iOS开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UILabel限制最大字数">
+<meta property="og:url" content="http://yoursite.com/2017/06/22/UILabel限制最大字数/index.html">
 <meta property="og:site_name" content="Castle&#39;s Blog">
+<meta property="og:description" content="最近项目里要求一些label要限制字数，超出以后打点。由于cell里面的布局可能很复杂，其他的控件可能需要依赖label的布局，所以不能直接把label设置成一个固定长度。 看了一圈发现网上没有太好的解决办法，不过StackOverflow的一个帖子给了一些启发，就记录一下。">
+<meta property="og:updated_time" content="2017-06-22T06:53:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Castle&#39;s Blog">
+<meta name="twitter:title" content="UILabel限制最大字数">
+<meta name="twitter:description" content="最近项目里要求一些label要限制字数，超出以后打点。由于cell里面的布局可能很复杂，其他的控件可能需要依赖label的布局，所以不能直接把label设置成一个固定长度。 看了一圈发现网上没有太好的解决办法，不过StackOverflow的一个帖子给了一些启发，就记录一下。">
 
 
 
@@ -125,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/22/UILabel限制最大字数/"/>
 
 
 
 
 
-  <title>Castle's Blog</title>
+  <title>UILabel限制最大字数 | Castle's Blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -157,9 +162,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -290,9 +293,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -318,9 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/22/UILabel限制最大字数/" itemprop="url">UILabel限制最大字数</a></h1>
+          <h1 class="post-title" itemprop="name headline">UILabel限制最大字数</h1>
         
 
         <div class="post-meta">
@@ -378,498 +379,87 @@
       
 
       
-        
-          <p>最近项目里要求一些label要限制字数，超出以后打点。由于cell里面的布局可能很复杂，其他的控件可能需要依赖label的布局，所以不能直接把label设置成一个固定长度。</p>
+        <p>最近项目里要求一些label要限制字数，超出以后打点。由于cell里面的布局可能很复杂，其他的控件可能需要依赖label的布局，所以不能直接把label设置成一个固定长度。</p>
 <p>看了一圈发现网上没有太好的解决办法，不过StackOverflow的一个帖子给了一些启发，就记录一下。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/22/UILabel限制最大字数/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<a id="more"></a>
+<h3 id="之前的方案"><a href="#之前的方案" class="headerlink" title="之前的方案"></a>之前的方案</h3><p>项目之前的方案是判断label.text的长度，超过就在末尾加”…”。类似于这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSString *subject = @&quot;test&quot;;</div><div class="line">subject = subject.length &gt; 20 ? [[subject substringToIndex:18] stringByAppendingString:@&quot;...&quot;] : subject;</div><div class="line">self.subjectLabel.text = subject;</div></pre></td></tr></table></figure>
+<p>这个方案的问题在于要是需求变成中间打点就不好改了。</p>
+<h3 id="目前方案"><a href="#目前方案" class="headerlink" title="目前方案"></a>目前方案</h3><p>找解决办法的过程中看到了StackOverFlow的这个帖子<a href="https://stackoverflow.com/questions/13067839/how-do-i-sizetofit-a-uilabel-by-changing-only-the-height-and-not-the-width" target="_blank" rel="external">How do I sizeToFit a UILabel by changing only the height and not the width?</a>，最顶的答案用了sizeWithFont来计算label的大小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">CGSize size = [label.text sizeWithFont:label.font</div><div class="line">                     constrainedToSize:CGSizeMake(maxWidth, MAXFLOAT)</div><div class="line">                         lineBreakMode:UILineBreakModeWordWrap]; </div><div class="line">CGRect labelFrame = label.frame;</div><div class="line">labelFrame.size.height = size.height;</div><div class="line">label.frame = labelFrame;</div></pre></td></tr></table></figure>
+<p>不过<a href="https://developer.apple.com/documentation/foundation/nsstring/1619917-sizewithfont" target="_blank" rel="external">sizeWithFont:</a>在iOS7以后就不被苹果推荐使用了，取而代之的是<a href="https://developer.apple.com/documentation/foundation/nsstring/1531844-sizewithattributes?language=objc" target="_blank" rel="external">sizeWithAttributes:</a>。</p>
+<p>所以在label的getter里先设置font、numberOfLines、lineBreakMode等属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (UILabel *)nameLabel &#123;</div><div class="line">    if (!_nameLabel) &#123;</div><div class="line">        _nameLabel           = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 10)];</div><div class="line">        _nameLabel.font      = [UIFont systemFontOfSize:15 weight:UIFontWeightSemibold];</div><div class="line">        _nameLabel.numberOfLines = 1;</div><div class="line">        _nameLabel.lineBreakMode = NSLineBreakByTruncatingTail;</div><div class="line">    &#125;</div><div class="line">    return _nameLabel;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后写cell的layoutSubviews方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)layoutSubviews &#123;</div><div class="line">    // ...</div><div class="line">	CGSize sizeOfNameLabel     = [self.nameLabel.text sizeWithAttributes:@&#123;NSFontAttributeName:self.nameLabel.font&#125;];</div><div class="line">    if (sizeOfNameLabel.width &lt; kNameLabelMaxWidth) &#123;</div><div class="line">        [self.nameLabel sizeToFit];</div><div class="line">    &#125; else &#123;</div><div class="line">        self.nameLabel.height  = sizeOfNameLabel.height;</div><div class="line">        self.nameLabel.width   = kNameLabelMaxWidth;</div><div class="line">    &#125;</div><div class="line">    // ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>先用sizeWithAttributes:方法设置label的字体属性，从而获取label的大小，然后根据label的宽度是否超过最大宽度来决定让label自适应大小还是定为最大宽度。</p>
+
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <div>
+      
+        
+
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/31/AFNetWorking工厂模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Castle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Castle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/31/AFNetWorking工厂模式/" itemprop="url">AFNetworking中的设计模式之工厂模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-31T14:59:28+08:00">
-                2017-05-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/iOS开发/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS开发</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/iOS开发/" rel="tag"># iOS开发</a>
           
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/31/AFNetWorking工厂模式/" class="leancloud_visitors" data-flag-title="AFNetworking中的设计模式之工厂模式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          <p><a href="https://zh.wikipedia.org/wiki/工厂方法" target="_blank" rel="external">工厂方法模式</a>(Factory Method Pattern)又称为工厂模式，属于创建型模式。在工厂方法模式中，工厂父类负责定义创建产品对象的公共接口，而工厂子类负责生成具体的产品对象，这样的目的是将产品类的实例化操作延迟到工厂子类中完成，即通过工厂子类来确定究竟应该实例化哪一个具体产品类。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/31/AFNetWorking工厂模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/31/AFNetWorking工厂模式/" rel="next" title="AFNetworking中的设计模式之工厂模式">
+                <i class="fa fa-chevron-left"></i> AFNetworking中的设计模式之工厂模式
+              </a>
+            
           </div>
-          <!--/noindex-->
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
+          <span class="post-nav-divider"></span>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/24/内置标签/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Castle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Castle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/24/内置标签/" itemprop="url">Hexo标签插件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+          <div class="post-nav-prev post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-24T14:00:45+08:00">
-                2017-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/备忘/" itemprop="url" rel="index">
-                    <span itemprop="name">备忘</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/24/内置标签/" class="leancloud_visitors" data-flag-title="Hexo标签插件">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>标签插件是用于在文章中快速插入特定内容的插件。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/24/内置标签/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/23/FirstTest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Castle">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Castle's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/23/FirstTest/" itemprop="url">Hexo发布指南</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T15:06:27+08:00">
-                2017-05-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/备忘/" itemprop="url" rel="index">
-                    <span itemprop="name">备忘</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/23/FirstTest/" class="leancloud_visitors" data-flag-title="Hexo发布指南">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>相当于每次换主题时候的备忘录，免得老是翻别人的博客。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/23/FirstTest/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
+  </div>
 
 
           </div>
@@ -877,6 +467,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -896,8 +490,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -966,6 +569,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#之前的方案"><span class="nav-number">1.</span> <span class="nav-text">之前的方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目前方案"><span class="nav-number">2.</span> <span class="nav-text">目前方案</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1075,6 +694,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
